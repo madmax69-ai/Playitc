@@ -25,11 +25,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.7"
+          cache-disabled: true
+
+      - name: Clean Gradle caches
+        run: rm -rf ~/.gradle/caches
 
       - name: Build debug APK
         run: |
           echo "Building APK..."
-          gradle :app:assembleDebug --stacktrace
+          gradle :app:assembleDebug --stacktrace --refresh-dependencies
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
